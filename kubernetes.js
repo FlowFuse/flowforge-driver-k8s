@@ -92,6 +92,7 @@ const createDeployment = async (project, options) => {
 
     const teamID = this._app.db.models.Team.encodeHashid(project.TeamId)
     const authTokens = await project.refreshAuthTokens()
+    localPod.spec.containers[0].env.push({ name: 'A_CUSTOM_ENV', value: 'true' })
     localPod.spec.containers[0].env.push({ name: 'FORGE_CLIENT_ID', value: authTokens.clientID })
     localPod.spec.containers[0].env.push({ name: 'FORGE_CLIENT_SECRET', value: authTokens.clientSecret })
     localPod.spec.containers[0].env.push({ name: 'FORGE_URL', value: this._app.config.api_url })
